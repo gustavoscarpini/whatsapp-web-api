@@ -1,0 +1,48 @@
+2023/02/17-11:09:13.717 a9c7 Creating DB /home/scarpini/tools/projects/pessoal/Rest-Api-Express-MongoDB/.wwebjs_auth/session-e768f0ea-8d22-47f6-ad21-7585e9d82a7e/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb since it was missing.
+2023/02/17-11:09:13.728 a9c7 Reusing MANIFEST /home/scarpini/tools/projects/pessoal/Rest-Api-Express-MongoDB/.wwebjs_auth/session-e768f0ea-8d22-47f6-ad21-7585e9d82a7e/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/02/17-11:09:13.817 a9b4 Level-0 table #5: started
+2023/02/17-11:09:13.821 a9b4 Level-0 table #5: 7177 bytes OK
+2023/02/17-11:09:13.826 a9b4 Delete type=0 #3
+2023/02/17-11:09:13.826 a9b4 Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/02/17-11:09:41.725 a9a6 Level-0 table #7: started
+2023/02/17-11:09:41.775 a9a6 Level-0 table #7: 1111108 bytes OK
+2023/02/17-11:09:41.779 a9a6 Delete type=0 #4
+2023/02/17-11:09:46.004 a9c4 Level-0 table #9: started
+2023/02/17-11:09:46.051 a9c4 Level-0 table #9: 1185403 bytes OK
+2023/02/17-11:09:46.056 a9c4 Delete type=0 #6
+2023/02/17-11:09:46.081 a9c7 Compacting 1@0 + 1@1 files
+2023/02/17-11:09:46.188 a9c7 Generated table #10@0: 46861 keys, 1590555 bytes
+2023/02/17-11:09:46.188 a9c7 Compacted 1@0 + 1@1 files => 1590555 bytes
+2023/02/17-11:09:46.192 a9c7 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/02/17-11:09:48.084 a9a7 Level-0 table #12: started
+2023/02/17-11:09:48.129 a9a7 Level-0 table #12: 1007614 bytes OK
+2023/02/17-11:09:48.135 a9a7 Delete type=0 #8
+2023/02/17-11:09:48.135 a9a7 Delete type=2 #9
+2023/02/17-11:09:48.135 a9a7 Delete type=2 #7
+2023/02/17-11:09:48.154 a9c8 Compacting 1@0 + 1@1 files
+2023/02/17-11:09:48.300 a9c8 Generated table #13@0: 69981 keys, 2205691 bytes
+2023/02/17-11:09:48.300 a9c8 Compacted 1@0 + 1@1 files => 2205691 bytes
+2023/02/17-11:09:48.305 a9c8 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/02/17-11:09:49.055 a9c8 Level-0 table #15: started
+2023/02/17-11:09:49.092 a9c8 Level-0 table #15: 944312 bytes OK
+2023/02/17-11:09:49.098 a9c8 Delete type=2 #12
+2023/02/17-11:09:49.098 a9c8 Delete type=2 #10
+2023/02/17-11:09:49.098 a9c8 Delete type=0 #11
+2023/02/17-11:09:49.100 a9c8 Compacting 1@0 + 1@1 files
+2023/02/17-11:09:49.211 a9c8 Generated table #16@0: 81332 keys, 2254094 bytes
+2023/02/17-11:09:49.239 a9c8 Generated table #17@0: 14500 keys, 653129 bytes
+2023/02/17-11:09:49.239 a9c8 Compacted 1@0 + 1@1 files => 2907223 bytes
+2023/02/17-11:09:49.243 a9c8 compacted to: files[ 0 2 1 0 0 0 0 ]
+2023/02/17-11:09:54.711 a9a7 Level-0 table #19: started
+2023/02/17-11:09:54.758 a9a7 Level-0 table #19: 933119 bytes OK
+2023/02/17-11:09:54.762 a9a7 Delete type=0 #14
+2023/02/17-11:09:54.762 a9a7 Delete type=2 #13
+2023/02/17-11:09:54.762 a9a7 Delete type=2 #15
+2023/02/17-11:09:55.213 a9c7 Compacting 1@0 + 2@1 files
+2023/02/17-11:09:55.384 a9c7 Generated table #20@0: 95320 keys, 2271454 bytes
+2023/02/17-11:09:55.417 a9c7 Generated table #21@0: 17778 keys, 768408 bytes
+2023/02/17-11:09:55.417 a9c7 Compacted 1@0 + 2@1 files => 3039862 bytes
+2023/02/17-11:09:55.421 a9c7 compacted to: files[ 0 2 1 0 0 0 0 ]
+2023/02/17-11:09:55.421 a9c7 Delete type=2 #19
+2023/02/17-11:09:55.421 a9c7 Delete type=2 #17
+2023/02/17-11:09:55.421 a9c7 Delete type=2 #16
