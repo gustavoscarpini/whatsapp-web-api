@@ -79,5 +79,3 @@ http://localhost:3000/api/send
 
 ```
 
-
-uuid: '3310aee8-eb3f-4fa6-ad04-499fdb0563c3',
