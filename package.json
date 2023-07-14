@@ -1,7 +1,7 @@
 {
   "name": "whatsapp-web-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API de envio de mensagens via whatsapp",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
