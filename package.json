@@ -16,7 +16,7 @@
     "nodemon": "^2.0.15",
     "qrcode-terminal": "^0.12.0",
     "uuid": "^9.0.0",
-    "whatsapp-web.js": "^1.19.4",
+    "whatsapp-web.js": "https://github.com/Julzk/whatsapp-web.js/tarball/jkr_hotfix_7",
     "wwebjs-mongo": "^1.1.0"
   }
 }

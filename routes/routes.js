@@ -5,16 +5,16 @@ const Message = require('../models/message');
 const qrcode = require('qrcode-terminal');
 const v4 = require('uuid');
 const mongoose = require('mongoose');
-const { MongoStore } = require('wwebjs-mongo');
+const {MongoStore} = require('wwebjs-mongo');
 
-const store = new MongoStore({ mongoose: mongoose });
+const store = new MongoStore({mongoose: mongoose});
 const router = express.Router();
 const clients = new Map();
 
-async function connectClient(instance) {
+function connectClient(instance) {
     console.log('instance to connect ::', instance);
 
-    if(!instance.uuid){
+    if (!instance.uuid) {
         console.log('instance with out UUID, return!');
         return;
     }
@@ -23,9 +23,10 @@ async function connectClient(instance) {
         authStrategy: new RemoteAuth({
             clientId: instance.uuid,
             store: store,
-            backupSyncIntervalMs: 300000
+            backupSyncIntervalMs: cçç,
+            dataPath: process.env.BOT_DATAPATH ? process.env.BOT_DATAPATH : './data/',
         }),
-        restartOnAuthFail: true, // optional
+        restartOnAuthFail: false, // optional
         puppeteer: {
             headless: true,
             args: [
@@ -40,8 +41,32 @@ async function connectClient(instance) {
         qrcode.generate(qr, {small: true});
     });
 
+    client.on('auth_failure', (message) => {
+        console.log('auth_failure', message);
+    });
+
+    client.on('disconnected', (reason) => {
+        console.log('disconnected', reason);
+        Instance.deleteOne({uuid: instance.uuid});
+    });
+
+    client.on('change_state', (state) => {
+        console.log('change_state', state);
+    });
+
+    client.on('authenticated', (session) => {
+        console.log('AUTHENTICATED', session);
+    });
+
     client.on('ready', () => {
         console.log('Client is ready!');
+
+        Message.find({instance: instance.uuid, delivered: false}).exec().then(value => {
+            console.log("Achou essas mensagens sem enviar .... ", value);
+           for(const message of value){
+                sendMessage(client, message);
+            }
+        });
     });
 
     client.on('remote_session_saved', () => {
@@ -49,9 +74,12 @@ async function connectClient(instance) {
         console.log('SESSION IS SAVED!!!!');
     });
 
-    await client.initialize();
-    clients.set(instance.uuid, client);
-    console.log('clients is now ::', clients.size);
+    client.initialize().then(() => {
+        clients.set(instance.uuid, client);
+        console.log('clients is now ::', clients.size);
+    });
+
+
 }
 
 router.post('/create', async (req, res) => {
@@ -61,7 +89,7 @@ router.post('/create', async (req, res) => {
     data.uuid = v4.v4();
     try {
         let saved = await data.save();
-        await connectClient(saved);
+        connectClient(saved);
         res.status(200).json(saved);
     } catch (error) {
         res.status(400).json({message: error.message})
@@ -74,7 +102,7 @@ router.post('/reconect', async (req, res) => {
     })
     try {
         const instance = await Instance.findOne({uui: data.uuid}).exec();
-        await connectClient(instance);
+        connectClient(instance);
         res.status(200).json(instance);
     } catch (error) {
         res.status(400).json({message: error.message})
@@ -82,45 +110,64 @@ router.post('/reconect', async (req, res) => {
 });
 
 
+function sendMessage(client, dataToSave) {
+    client.sendMessage(dataToSave.phone + "@c.us", dataToSave.message).then(value => {
+        console.log("Mandou a mensagem ", value);
+        Message.findOne({uuid: dataToSave.uuid}).exec().then(one => {
+            console.log("acheou a mensagem ", one);
+            one.delivered = true;
+            one.save();
+        })
+    });
+}
+
 //Post Method
 router.post('/send', async (req, res) => {
+
     const message = new Message({
         message: req.body.message,
+        delivered: false,
+        instance: req.body.clientId,
         phone: req.body.phone
     });
-    console.log('vai mandar a msg ::', message);
+    message.uuid = v4.v4();
+    const dataToSave = await message.save();
     let client = clients.get(req.body.clientId);
+
     if (!client) {
         console.log("Não tem o cliente no mapa, vai reconectar")
         const instance = await Instance.findOne({uuid: req.body.clientId}).exec();
         console.log("VOltou do mongo :: ", instance);
-        await connectClient(instance);
-        client = clients.get(req.body.clientId);
-    }
-    if (client) {
+        if (instance) {
+            connectClient(instance);
+            res.status(200).json(dataToSave)
+        } else {
+            console.log("Não tem o cliente no mongo, já era")
+            res.status(400).json({message: "Instancia não encontrada"})
+        }
+    } else {
         try {
-            const dataToSave = await message.save();
-            console.log("salvou e vai mandar a msg")
-            await client.sendMessage(dataToSave.phone +"@c.us", dataToSave.message);
+            console.log('vai mandar a msg ::', message);
+            sendMessage(client, dataToSave);
             res.status(200).json(dataToSave)
         } catch (error) {
             console.error("Iiiih", error);
             res.status(400).json({message: error.message})
         }
-    } else {
-        console.log("Não tem o cliente no mongo, já era")
-        res.status(400).json({message: "Instancia não encontrada"})
     }
 })
 
-async function connectAll() {
-    const all = Instance.find();
-    for (let i = 0; i < all.length; i++) {
-        const instance = all[i];
-        await connectClient(instance);
-    }
-}
 
-connectAll(); //TODO não rolou issoaqui
+router.get('/reconect-all', function (req, res) {
+    console.log("Vai reconectar TODOS!");
+    Instance.find().then(all => {
+            console.log("Total de instancias ", all.length);
+            for (const element of all) {
+                connectClient(element);
+            }
+        }
+    )
+});
+
 
 module.exports = router;

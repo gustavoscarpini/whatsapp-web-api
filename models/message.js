@@ -8,6 +8,18 @@ const dataSchema = new mongoose.Schema({
     message: {
         required: true,
         type: String
+    },
+    delivered: {
+        required: true,
+        type: Boolean
+    },
+    instance: {
+        required: true,
+        type: String
+    },
+    uuid: {
+        required: true,
+        type: String
     }
 })
 
